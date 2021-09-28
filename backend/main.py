@@ -1,5 +1,6 @@
 from sanic import Sanic, response
 from sanic_cors import CORS
+from operations import autoFill
 import json
 
 
@@ -40,8 +41,11 @@ def create_app():
             {"id": 19, "name": "Scottsdale 320", "tags": "gen3, southwest"},
             {"id": 20, "name": "Scottsdale 142", "tags": "gen4, southwest, kitchen"}
         ]
-        
-        return response.json({'stores': stores})
+
+        output = autoFill(request.json["searchStr"], stores)
+        return response.json(output)
+    
+        # return response.json({'stores': stores})
 
     return app
 

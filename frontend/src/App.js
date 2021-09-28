@@ -1,11 +1,12 @@
 import './App.css';
+import Searchbox from './components/Searchbox';
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Store Search</h1>
-    </div>
-  );
-}
+  function App() {
+    return (
+      <div className="App">
+        <Searchbox />
+      </div>
+    );
+  }
 
 export default App;
