@@ -23,4 +23,6 @@ The API backend is written in python and will need to be customized to take the 
 - You can run on any major OS (MacOS, Windows, Linux) but you will need `Docker` and `docker-compose` working
 
 ### Demo
-<video controls><source src="demo.mov" type="video/mov"></video>
+https://user-images.githubusercontent.com/73366673/135208725-52840277-e51f-46ed-a2c0-b336f85bd2a1.mov
+
+
