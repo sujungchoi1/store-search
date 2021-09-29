@@ -2,6 +2,7 @@ from sanic import Sanic, response
 from sanic_cors import CORS
 from operations import autoFill
 import json
+import re
 
 
 def create_app():
@@ -19,6 +20,7 @@ def create_app():
     # Modify to take a search filter and return only matching results
     @app.route("/backend/stores", methods=["POST"])
     async def stores(request):
+        searchStr = request.json["searchStr"]
         stores = [
             {"id": 1, "name": "Buffalo", "tags": "gen3, northeast"},
             {"id": 2, "name": "Gilbert", "tags": "gen3, southwest, kitchen"},
@@ -42,10 +44,13 @@ def create_app():
             {"id": 20, "name": "Scottsdale 142", "tags": "gen4, southwest, kitchen"}
         ]
 
-        output = autoFill(request.json["searchStr"], stores)
-        return response.json(output)
-    
-        # return response.json({'stores': stores})
+        result = []
+        for s in stores:
+            if re.search(searchStr, s["name"], re.IGNORECASE):
+                result.append(s)
+            # elif re.search(searchStr, s["tags"], re.IGNORECASE):
+            #     result.append(s)
+        return response.json({'stores': result})
 
     return app
 

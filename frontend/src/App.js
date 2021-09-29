@@ -1,10 +1,10 @@
 import './App.css';
-import Searchbox from './components/Searchbox';
+import SearchBox from './components/Searchbox';
 
   function App() {
     return (
       <div className="App">
-        <Searchbox />
+        <SearchBox />
       </div>
     );
   }

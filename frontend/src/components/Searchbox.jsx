@@ -1,78 +1,49 @@
-import React, { useEffect, useState } from 'react';
-// import { FormControl, Button, Input } from '@mui/material';
-import {Form, Button, Input} from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Icon, Input } from 'semantic-ui-react';
 import axios from 'axios';
+import StoreList from './StoreList';
+import '../App.css';
 
 const Searchbox = (props) => {
 
     const [store, setStore] = useState([]);
     const [search, setSearch] = useState('');
 
-    // const getStores = () => {
-    //     axios.get('https://pokeapi.co/api/v2/pokemon?limit=100')
-    //         .then(response => {
-    //             setStore(response.data.results);
-    //             console.log(response);
-    //         });
-    // };
-
-       // to fetch from backend
     const getStores = (search) => {
-        axios.post(`http://localhost/backend/stores/`, search)  // POST http://localhost:5004/backend/stores/ net::ERR_CONNECTION_REFUSED
+        axios.post("http://localhost/backend/stores/", { searchStr: search })
             .then(response => {
-                // setStore(response.data.data);
-                setStore(response.data);
-                console.log(response);
-            }) 
-            .catch(err=>console.log("Error: ", err))           
+                setStore(response.data.stores);
+                console.log(response.data.stores);
+            })
+            .catch(err => console.log("Error: ", err))
     }
-    // const getStores = () => {
-    //     axios.get(`http://localhost:5004/backend/stores/`)
-    //         .then(response => {
-    //             // setStore(response.data.data);
-    //             setStore(response.data.stores);
-    //             console.log(response);
-    //         }) 
-    //         .catch(err=>console.log("Error: ", err))           
-    // }
-
     const handleChange = (e) => {
-        console.log(search)
-        setSearch(e.target.value)
-        getStores();
+        const searchStr = e.target.value;
+        
+        if (searchStr === "") setStore([])
+        else getStores(searchStr);
     }
-
-    const fileteredStores= store.filter(
-        s => s.name.toLowerCase().includes(search.toLowerCase()) 
-            // || s.tags.toLowerCase().includes(search.toLowerCase())              
-        );
 
     return (
-        <div className="wrapper">
-                {/* <SearchBox /> */}
-                <h2>Search Store</h2>
-                    <Input
-                        name='name'
-                        value={search}
-                        onChange={handleChange}
-                    />
-                    {/* <Button onClick={searchStores} className="ui red basic button">SEARCH</Button> */}
+        <div className="box-wrapper">
+            <div className="search-box">
+                <div className="searchbox-label">
+                    <h1>Search Store</h1> <Icon name="search" size="big" color="green" />
+                </div>
+                <Input
+                    className="input-box"
+                    name='name'
+                    type='text'
+                    placeholder='Enter a store name ex) buffalo'
+                    onChange={handleChange}
+                />
+            </div>
 
-                    {/* list gets hidden by the search history */}
-                    <div style={{ "backgroundColor": "beige", "width": "300px", "height": "250px" }}></div>
+            <StoreList store={store} />
 
-                <ul>
-                    {fileteredStores.map((value, index) => {
-                        return (              
-                            <li key={index} >{value.name}</li>
-                        )
-                    })}
-                </ul>
-
-
-       </div>
+        </div>
 
     )
 }
 
-export default Searchbox;
+export default Searchbox
