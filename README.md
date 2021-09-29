@@ -23,4 +23,4 @@ The API backend is written in python and will need to be customized to take the 
 - You can run on any major OS (MacOS, Windows, Linux) but you will need `Docker` and `docker-compose` working
 
 ### Demo
-![Demo video of store search feature](demo.mov)
+<video controls><source src="demo.mov" type="video/mov"></video>
